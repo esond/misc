@@ -6,7 +6,7 @@ namespace Flamtap.Extensions
     {
         public static string ToDisplayText(this string str)
         {
-            return string.Join(" ", Regex.Split(str, @"(\B[A-Z]+?(?=[A-Z][^A-Z])|\B[A-Z]+?(?=[^A-Z]))"));
+            return Regex.Replace(str, @"([a-z](?=[A-Z0-9])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         }
     }
 }
