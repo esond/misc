@@ -4,9 +4,14 @@ namespace Flamtap.Extensions
 {
     public static class StringExtensions
     {
-        public static string ToDisplayText(this string str)
+        /// <summary>
+        /// Splits a camel-case string into individual words.
+        /// (e.g. "HomerSimpson".ToDisplayName() == "Homer Simpson")
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public static string ToDisplayText(this string value)
         {
-            return Regex.Replace(str, @"([a-z](?=[A-Z0-9])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+            return Regex.Replace(value, @"([a-z](?=[A-Z0-9])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         }
     }
 }
