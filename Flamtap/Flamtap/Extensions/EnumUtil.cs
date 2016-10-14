@@ -5,7 +5,7 @@ namespace Flamtap.Extensions
     public static class EnumUtil
     {
         /// <summary>
-        /// Parses a string value to it's equivalent enum value.
+        /// Parses a string value to it's equivalent enum value. Case insensitive.
         /// </summary>
         /// <typeparam name="T">The enum type.</typeparam>
         /// <returns> The enum value with specified name.</returns>
