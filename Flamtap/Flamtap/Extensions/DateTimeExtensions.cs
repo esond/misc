@@ -14,7 +14,7 @@ namespace Flamtap.Extensions
         ///     be the same week number as whatever Thursday, Friday or Saturday are.
         /// </remarks>
         /// <see cref="https://blogs.msdn.microsoft.com/shawnste/2006/01/24/iso-8601-week-of-year-format-in-microsoft-net/" />
-        /// <param name="time"></param>
+        /// <param name="time">The DateTime.</param>
         /// <returns>The number or the week that the DateTime falls in.</returns>
         public static int GetIso8601WeekOfYear(this DateTime time)
         {
