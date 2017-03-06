@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Flamtap.Extensions;
+﻿using Flamtap.Extensions;
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Flamtap.UnitTests.Extensions
 {
@@ -33,43 +30,52 @@ namespace Flamtap.UnitTests.Extensions
         }
 
         [Test]
-        public void SplitAndKeep_keeps_delimiters()
-        {
-            IEnumerable<string> substrings = "-george-constanza".SplitAndKeep('-');
-
-            foreach (string substring in substrings)
-                Assert.True(substring.StartsWith("-"));
-        }
-
-        [Test]
         public void SplitUnixArgs_handles_emtpty_strings()
         {
-            IEnumerable<string> args = string.Empty.SplitUnixArgs();
+            string[] args = string.Empty.SplitUnixArgs();
 
-            Assert.True(!args.Any());
+            args.Length.ShouldBeEquivalentTo(0);
         }
 
         [Test]
         public void SplitUnixArgs_splits_args()
         {
-            IEnumerable<string> args = "-u 123 -m message".SplitUnixArgs();
+            string[] args = "-u 123 -m message".SplitUnixArgs();
 
-            Assert.True(args.First() == "-u 123");
-            Assert.True(args.Last() == "-m message");
+            args.Length.ShouldBeEquivalentTo(2);
+            args[0].ShouldBeEquivalentTo("-u 123");
+            args[1].ShouldBeEquivalentTo("-m message");
+
+            args = "-am somevalue --id 123 -m \"message\"".SplitUnixArgs();
+            
+            args.Length.ShouldBeEquivalentTo(3);
+            args[0].ShouldBeEquivalentTo("-am somevalue");
+            args[1].ShouldBeEquivalentTo("--id 123");
+            args[2].ShouldBeEquivalentTo("-m \"message\"");
         }
 
         [Test]
         public void SplitUnixArgs_handles_verbs()
         {
-            IEnumerable<string> args = "commit -a".SplitUnixArgs();
+            string[] args = "commit -a".SplitUnixArgs();
 
-            Assert.True(args.First() == "commit");
-            Assert.True(args.Last() == "-a");
+            args.Length.ShouldBeEquivalentTo(2);
+            args[0].ShouldBeEquivalentTo("commit");
+            args[1].ShouldBeEquivalentTo("-a");
 
-            args = "push --set-upstream-to".SplitUnixArgs().ToList();
+            args = "push --set-upstream-to".SplitUnixArgs();
 
-            Assert.True(args.First() == "push");
-            Assert.True(args.Last() == "--set-upstream-to");
+            args.Length.ShouldBeEquivalentTo(2);
+            args[0].ShouldBeEquivalentTo("push");
+            args[1].ShouldBeEquivalentTo("--set-upstream-to");
+
+            args = "tag --version 12 -arg=asdfasdf -m \"super cool\"".SplitUnixArgs();
+
+            args.Length.ShouldBeEquivalentTo(4);
+            args[0].ShouldBeEquivalentTo("tag");
+            args[1].ShouldBeEquivalentTo("--version 12");
+            args[2].ShouldBeEquivalentTo("-arg=asdfasdf");
+            args[3].ShouldBeEquivalentTo("-m \"super cool\"");
         }
     }
 }

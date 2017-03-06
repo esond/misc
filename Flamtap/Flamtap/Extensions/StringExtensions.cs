@@ -18,49 +18,44 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Splits a string into substrings based on the characters in an array, but keeps the characters in the 
-        /// substring, unlike string.Split().
+        /// Splits up a string of unix-style arguments into an array of arguments.
         /// </summary>
-        /// <param name="s">The string to split.</param>
-        /// <param name="separator">A character that delimits the substrings in this string.</param>
+        /// <param name="s">The arguments string to parse.</param>
         /// <returns></returns>
-        public static IEnumerable<string> SplitAndKeep(this string s, char separator)
-        {
-            IEnumerable<string> tokens = s.Split(separator);
-
-            foreach (string token in tokens)
-                yield return $"{separator}{token}";
-        }
-
         public static string[] SplitUnixArgs(this string s)
         {
             if (string.IsNullOrWhiteSpace(s))
                 return new string[0];
 
-            int start = 0;
-
             List<string> args = new List<string>();
 
-            if (!s.StartsWith("-"))
+            int start = 0, length = 0;
+
+            if (!s.StartsWith("-")) //the first token is a verb
             {
                 start = s.IndexOf(" ", StringComparison.Ordinal);
-                args.Add(s.Substring(0, start)); // the verb, if any
+
+                if (start == -1)
+                    return s.Yield().ToArray();
+
+                args.Add(s.Substring(0, start));
             }
 
-            int index = s.IndexOf("-", start, StringComparison.Ordinal);
-
-            while (index != -1)
+            while (length != -1)
             {
-                int indexOfNextCommand = s.IndexOf(" -", index + 1, StringComparison.Ordinal);
+                length = s.IndexOf(" -", start + 1, StringComparison.Ordinal);
 
-                args.Add(indexOfNextCommand != -1
-                    ? s.Substring(index, indexOfNextCommand)
-                    : s.Substring(index, s.Length - index));
+                string toAdd = length == -1 
+                    ? s.Substring(start, s.Length - start) 
+                    : s.Substring(start, length - start);
 
-                index = indexOfNextCommand;
+                start += toAdd.Length;
+
+                if (!string.IsNullOrWhiteSpace(toAdd))
+                    args.Add(toAdd.Trim());
             }
 
-            return args.Select(a => a.Trim()).ToArray();
+            return args.ToArray();
         }
     }
 }
