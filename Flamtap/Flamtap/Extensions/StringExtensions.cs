@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Flamtap.Extensions
@@ -28,6 +30,37 @@ namespace Flamtap.Extensions
 
             foreach (string token in tokens)
                 yield return $"{separator}{token}";
+        }
+
+        public static string[] SplitUnixArgs(this string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return new string[0];
+
+            int start = 0;
+
+            List<string> args = new List<string>();
+
+            if (!s.StartsWith("-"))
+            {
+                start = s.IndexOf(" ", StringComparison.Ordinal);
+                args.Add(s.Substring(0, start)); // the verb, if any
+            }
+
+            int index = s.IndexOf("-", start, StringComparison.Ordinal);
+
+            while (index != -1)
+            {
+                int indexOfNextCommand = s.IndexOf(" -", index + 1, StringComparison.Ordinal);
+
+                args.Add(indexOfNextCommand != -1
+                    ? s.Substring(index, indexOfNextCommand)
+                    : s.Substring(index, s.Length - index));
+
+                index = indexOfNextCommand;
+            }
+
+            return args.Select(a => a.Trim()).ToArray();
         }
     }
 }

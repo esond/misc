@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Flamtap.Extensions;
 using NUnit.Framework;
 
@@ -37,6 +39,37 @@ namespace Flamtap.UnitTests.Extensions
 
             foreach (string substring in substrings)
                 Assert.True(substring.StartsWith("-"));
+        }
+
+        [Test]
+        public void SplitUnixArgs_handles_emtpty_strings()
+        {
+            IEnumerable<string> args = string.Empty.SplitUnixArgs();
+
+            Assert.True(!args.Any());
+        }
+
+        [Test]
+        public void SplitUnixArgs_splits_args()
+        {
+            IEnumerable<string> args = "-u 123 -m message".SplitUnixArgs();
+
+            Assert.True(args.First() == "-u 123");
+            Assert.True(args.Last() == "-m message");
+        }
+
+        [Test]
+        public void SplitUnixArgs_handles_verbs()
+        {
+            IEnumerable<string> args = "commit -a".SplitUnixArgs();
+
+            Assert.True(args.First() == "commit");
+            Assert.True(args.Last() == "-a");
+
+            args = "push --set-upstream-to".SplitUnixArgs().ToList();
+
+            Assert.True(args.First() == "push");
+            Assert.True(args.Last() == "--set-upstream-to");
         }
     }
 }
