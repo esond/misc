@@ -1,4 +1,6 @@
-﻿using Flamtap.Extensions;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Flamtap.Extensions;
 using NUnit.Framework;
 
 namespace Flamtap.UnitTests.Extensions
@@ -26,6 +28,15 @@ namespace Flamtap.UnitTests.Extensions
             Assert.AreEqual("The Year 2000", "TheYear2000".ToDisplayText());
             Assert.AreEqual("Nhl 2016", "Nhl2016".ToDisplayText());
             Assert.AreEqual("March 18th 1992", "March18th1992".ToDisplayText());
+        }
+
+        [Test]
+        public void SplitAndKeep_keeps_delimiters()
+        {
+            IEnumerable<string> substrings = "-george-constanza".SplitAndKeep('-');
+
+            foreach (string substring in substrings)
+                Assert.True(substring.StartsWith("-"));
         }
     }
 }
