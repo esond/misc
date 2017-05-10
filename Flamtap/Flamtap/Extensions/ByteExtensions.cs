@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mcThings.Extensions
+namespace Flamtap.Extensions
 {
     public static class ByteExtensions
     {
