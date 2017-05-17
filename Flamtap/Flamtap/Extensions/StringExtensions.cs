@@ -11,6 +11,16 @@ namespace Flamtap.Extensions
     public static class StringExtensions
     {
         /// <summary>
+        /// Returns a string containing all the characters appearing after the last index of a given value.
+        /// </summary>
+        /// <param name="value">The string to seek.</param>
+        /// <param name="indexOf">The string to index from.</param>
+        public static string AfterLast(this string value, string indexOf)
+        {
+            return value.Substring(value.LastIndexOf(indexOf, StringComparison.Ordinal) + indexOf.Length);
+        }
+
+        /// <summary>
         /// Evaluates whether or not a string consists of only ASCII characters. 
         /// </summary>
         /// <param name="value">The string to evaluate</param>

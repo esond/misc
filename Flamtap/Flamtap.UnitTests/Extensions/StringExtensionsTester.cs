@@ -12,6 +12,20 @@ namespace Flamtap.UnitTests.Extensions
     [TestFixture]
     public class StringExtensionsTester
     {
+        #region AfterLast
+
+        [Test]
+        public void AfterLast_should_return_all_characters_after_specified_string()
+        {
+            "Homer Simpson".AfterLast(" ").ShouldBeEquivalentTo("Simpson");
+            "George Louis Costanza".AfterLast("Louis").ShouldBeEquivalentTo(" Costanza");
+            "mqtt/topic/example".AfterLast("/").ShouldBeEquivalentTo("example");
+            "underscores_ and_ spaces_".AfterLast("_ ").ShouldBeEquivalentTo("spaces_");
+            "an|empty|string|should|be|returned|".AfterLast("|").ShouldBeEquivalentTo(string.Empty);
+        }
+
+        #endregion
+
         #region IsAscii
 
         #region IsAscii Test Values
