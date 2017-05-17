@@ -7,27 +7,21 @@ namespace Flamtap.UnitTests.Extensions
     [TestFixture]
     public class StringExtensionsTester
     {
-        [Test]
-        public void ToDisplayText_splits_strings_are_split_on_capital_letters()
-        {
-            Assert.AreEqual("Homer Simpson", "HomerSimpson".ToDisplayText());
-            Assert.AreEqual("lower Case First", "lowerCaseFirst".ToDisplayText());
-        }
+        #region RemoveNonAlphanumeric
 
         [Test]
-        public void ToDisplayText_preserves_acronyms()
+        public void RemoveNonAlphanumeric_should_remove_symbols()
         {
-            Assert.AreEqual("SQL Server", "SQLServer".ToDisplayText());
-            Assert.AreEqual("Calgary Flames NHL", "CalgaryFlamesNHL".ToDisplayText());
+            "1234!".RemoveNonAlphanumeric().ShouldBeEquivalentTo("1234");
+            "$%#!%!*()&^(".RemoveNonAlphanumeric().ShouldBeEquivalentTo(string.Empty);
+            "-foo_bar_".RemoveNonAlphanumeric().ShouldBeEquivalentTo("foobar");
+
+            "abc123".RemoveNonAlphanumeric().ShouldBeEquivalentTo("abc123");
         }
 
-        [Test]
-        public void ToDisplayText_splits_on_numbers()
-        {
-            Assert.AreEqual("The Year 2000", "TheYear2000".ToDisplayText());
-            Assert.AreEqual("Nhl 2016", "Nhl2016".ToDisplayText());
-            Assert.AreEqual("March 18th 1992", "March18th1992".ToDisplayText());
-        }
+        #endregion
+
+        #region SplitUnixArgs
 
         [Test]
         public void SplitUnixArgs_handles_emtpty_strings()
@@ -47,7 +41,7 @@ namespace Flamtap.UnitTests.Extensions
             args[1].ShouldBeEquivalentTo("-m message");
 
             args = "-am somevalue --id 123 -m \"message\"".SplitUnixArgs();
-            
+
             args.Length.ShouldBeEquivalentTo(3);
             args[0].ShouldBeEquivalentTo("-am somevalue");
             args[1].ShouldBeEquivalentTo("--id 123");
@@ -77,5 +71,33 @@ namespace Flamtap.UnitTests.Extensions
             args[2].ShouldBeEquivalentTo("-arg=asdfasdf");
             args[3].ShouldBeEquivalentTo("-m \"super cool\"");
         }
+
+        #endregion
+
+        #region ToDisplayText
+
+        [Test]
+        public void ToDisplayText_splits_strings_are_split_on_capital_letters()
+        {
+            Assert.AreEqual("Homer Simpson", "HomerSimpson".ToDisplayText());
+            Assert.AreEqual("lower Case First", "lowerCaseFirst".ToDisplayText());
+        }
+
+        [Test]
+        public void ToDisplayText_preserves_acronyms()
+        {
+            Assert.AreEqual("SQL Server", "SQLServer".ToDisplayText());
+            Assert.AreEqual("Calgary Flames NHL", "CalgaryFlamesNHL".ToDisplayText());
+        }
+
+        [Test]
+        public void ToDisplayText_splits_on_numbers()
+        {
+            Assert.AreEqual("The Year 2000", "TheYear2000".ToDisplayText());
+            Assert.AreEqual("Nhl 2016", "Nhl2016".ToDisplayText());
+            Assert.AreEqual("March 18th 1992", "March18th1992".ToDisplayText());
+        }
+
+        #endregion
     }
 }

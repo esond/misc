@@ -8,13 +8,11 @@ namespace Flamtap.Extensions
     public static class StringExtensions
     {
         /// <summary>
-        /// Splits a camel-case string into individual words.
-        /// (e.g. "HomerSimpson".ToDisplayName() == "Homer Simpson")
+        /// Remove all characters from a string that are not a letter or a number.
         /// </summary>
-        /// <param name="value">The value.</param>
-        public static string ToDisplayText(this string value)
+        public static string RemoveNonAlphanumeric(this string value)
         {
-            return Regex.Replace(value, @"([a-z](?=[A-Z0-9])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+            return new Regex("[^a-zA-Z0-9 ]").Replace(value, string.Empty);
         }
 
         /// <summary>
@@ -45,8 +43,8 @@ namespace Flamtap.Extensions
             {
                 length = s.IndexOf(" -", start + 1, StringComparison.Ordinal);
 
-                string toAdd = length == -1 
-                    ? s.Substring(start, s.Length - start) 
+                string toAdd = length == -1
+                    ? s.Substring(start, s.Length - start)
                     : s.Substring(start, length - start);
 
                 start += toAdd.Length;
@@ -56,6 +54,16 @@ namespace Flamtap.Extensions
             }
 
             return args.ToArray();
+        }
+
+        /// <summary>
+        /// Splits a camel-case string into individual words.
+        /// (e.g. "HomerSimpson".ToDisplayName() == "Homer Simpson")
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public static string ToDisplayText(this string value)
+        {
+            return Regex.Replace(value, @"([a-z](?=[A-Z0-9])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         }
     }
 }
