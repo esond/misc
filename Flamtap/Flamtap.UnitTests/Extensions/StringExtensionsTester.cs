@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using Flamtap.Extensions;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace Flamtap.UnitTests.Extensions
 {
@@ -31,7 +33,7 @@ namespace Flamtap.UnitTests.Extensions
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i <= 127; i++)
-                sb.Append((char)i);
+                sb.Append((char) i);
 
             return sb.ToString();
         }
@@ -51,10 +53,7 @@ namespace Flamtap.UnitTests.Extensions
         [Test]
         public void IsAscii_should_throw_ArgumentNullException_when_given_null_or_empty_value()
         {
-            Action action = () =>
-            {
-                ((string)null).IsAscii();
-            };
+            Action action = () => { ((string) null).IsAscii(); };
             action.ShouldThrowExactly<ArgumentNullException>();
 
             action = () => { string.Empty.IsAscii(); };
@@ -144,6 +143,25 @@ namespace Flamtap.UnitTests.Extensions
 
         #endregion
 
+        #region StripDiacratics
+
+        [Test]
+        public static void StripDiacratics_should_normalize_strings_with_diacratics()
+        {
+            "Éric Söndergard".StripDiacritics().ShouldBeEquivalentTo("Eric Sondergard");
+            "Gêorgé Costanzà".StripDiacritics().ShouldBeEquivalentTo("George Costanza");
+            "Hafthór Júlíus Björnsson".StripDiacritics().ShouldBeEquivalentTo("Hafthor Julius Bjornsson");
+        }
+
+        [Test]
+        public static void StripDiacratics_should_not_modify_strings_with_no_diacratics()
+        {
+            "Eric Sondergard".StripDiacritics().ShouldBeEquivalentTo("Eric Sondergard");
+            "George Costanza".StripDiacritics().ShouldBeEquivalentTo("George Costanza");
+        }
+
+        #endregion
+
         #region ToDisplayText
 
         [Test]
@@ -166,6 +184,40 @@ namespace Flamtap.UnitTests.Extensions
             Assert.AreEqual("The Year 2000", "TheYear2000".ToDisplayText());
             Assert.AreEqual("Nhl 2016", "Nhl2016".ToDisplayText());
             Assert.AreEqual("March 18th 1992", "March18th1992".ToDisplayText());
+        }
+
+        #endregion
+
+        #region ToValidFileName
+
+        public static IEnumerable<string> InvalidFileNames
+        {
+            get
+            {
+                yield return "24/05/2017";
+                yield return @"24\05\2017";
+                yield return "24>05<2017:24|05?*2017";
+                yield return "Fo" + '"' + "o";
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidFileNames))]
+        public void ToValidFileName_should_convert_value_to_valid_filename(string value)
+        {
+            value.ToValidFileName().ToCharArray().Intersect(Path.GetInvalidFileNameChars()).Should().BeEmpty();
+        }
+
+        [Test]
+        public void ToValidFileName_throws_ArgumentException_if_replacement_string_contains_invalid_filename_chars()
+        {
+            const string value = "17/05/2017";
+
+            Action action = () => value.ToValidFileName("/");
+            action.ShouldThrowExactly<ArgumentException>();
+
+            action = () => value.ToValidFileName(":\\");
+            action.ShouldThrowExactly<ArgumentException>();
         }
 
         #endregion
