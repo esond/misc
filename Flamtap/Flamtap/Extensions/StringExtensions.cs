@@ -8,6 +8,24 @@ namespace Flamtap.Extensions
     public static class StringExtensions
     {
         /// <summary>
+        /// Evaluates whether or not a string consists of only ASCII characters. 
+        /// </summary>
+        /// <param name="value">The string to evaluate</param>
+        /// <returns>True if the string contains only ASCII characters.</returns>
+        public static bool IsAscii(this string value)
+        {
+            /* It could be argued that IsAscii() should return true when given an empty string, because an empty string
+             * isn't *not* ASCII. However, if one is checking a string's contents, they probably meant for the string
+             * to hold some kind of value in the first place, so we may as well break. */
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+
+            const int maxAsciiCode = 127;
+
+            return value.All(c => c <= maxAsciiCode);
+        }
+
+        /// <summary>
         /// Remove all characters from a string that are not a letter or a number.
         /// </summary>
         public static string RemoveNonAlphanumeric(this string value)
