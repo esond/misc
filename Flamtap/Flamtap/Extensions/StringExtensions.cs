@@ -11,7 +11,7 @@ namespace Flamtap.Extensions
     public static class StringExtensions
     {
         /// <summary>
-        /// Returns a string containing all the characters appearing after the last index of a given value.
+        ///     Returns a string containing all the characters appearing after the last index of a given value.
         /// </summary>
         /// <param name="value">The string to seek.</param>
         /// <param name="indexOf">The string to index from.</param>
@@ -21,7 +21,7 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Evaluates whether or not a string consists of only ASCII characters. 
+        ///     Evaluates whether or not a string consists of only ASCII characters.
         /// </summary>
         /// <param name="value">The string to evaluate</param>
         /// <returns>True if the string contains only ASCII characters.</returns>
@@ -39,7 +39,7 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Remove all characters from a string that are not a letter or a number.
+        ///     Remove all characters from a string that are not a letter or a number.
         /// </summary>
         public static string RemoveNonAlphanumeric(this string value)
         {
@@ -47,7 +47,33 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Splits up a string of unix-style arguments into an array of arguments.
+        ///     Like string.Split(), but preserves the separator on the end of the results.
+        /// </summary>
+        /// <param name="value">The string to split.</param>
+        /// <param name="separator">
+        ///     A character array that delimits the substrings in this string, an empty array that contains no
+        ///     delimiters, or null.
+        /// </param>
+        /// <param name="options">
+        ///     StringSplitOptions.RemoveEmptyEntries to omit empty array elements from the result or
+        ///     System.StringSplitOptions.None to include empty array elements in the result.
+        /// </param>
+        /// <returns>
+        ///     An array whose elements contain the substrings from this instance that are delimited by one or
+        ///     more characters in separator.
+        /// </returns>
+        public static string[] SplitAndKeep(this string value, string separator,
+            StringSplitOptions options = StringSplitOptions.None)
+        {
+            string[] result = Regex.Split(value, $"(?<=[{separator}])");
+
+            return options == StringSplitOptions.RemoveEmptyEntries
+                ? result.Where(s => !string.IsNullOrEmpty(s)).ToArray()
+                : result;
+        }
+
+        /// <summary>
+        ///     Splits up a string of unix-style arguments into an array of arguments.
         /// </summary>
         /// <param name="s">The arguments string to parse.</param>
         /// <returns></returns>
@@ -88,12 +114,12 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Replace the diacritic characters in in a string with their ASCII equivalents (if possible).
-        /// e.g. "Éric Søndergard".StripDiacritics() == "Eric Sondergard"
+        ///     Replace the diacritic characters in in a string with their ASCII equivalents (if possible).
+        ///     e.g. "Éric Søndergard".StripDiacritics() == "Eric Sondergard"
         /// </summary>
         /// <param name="value">The value with diacratics.</param>
         /// <returns>The value without diacritics.</returns>
-        /// <see cref="http://stackoverflow.com/a/249126/1672990"/>
+        /// <see cref="http://stackoverflow.com/a/249126/1672990" />
         public static string StripDiacritics(this string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -114,8 +140,8 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Splits a camel-case string into individual words.
-        /// (e.g. "HomerSimpson".ToDisplayName() == "Homer Simpson")
+        ///     Splits a camel-case string into individual words.
+        ///     (e.g. "HomerSimpson".ToDisplayName() == "Homer Simpson")
         /// </summary>
         /// <param name="value">The value.</param>
         public static string ToDisplayText(this string value)
@@ -124,8 +150,8 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        /// Converts the string to a valid file name by replacing invalid chars with underscores or a given value.
-        /// (e.g. "08/03/2017".ToValidFileName() == "Backup on 08_03_2017")
+        ///     Converts the string to a valid file name by replacing invalid chars with underscores or a given value.
+        ///     (e.g. "08/03/2017".ToValidFileName() == "Backup on 08_03_2017")
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="replacement">The string to replace invalid characters with.</param>
@@ -144,12 +170,10 @@ namespace Flamtap.Extensions
             StringBuilder result = new StringBuilder();
 
             foreach (char c in value.StripDiacritics())
-            {
                 if (' ' <= c && c <= '~' && Array.IndexOf(invalidChars, c) < 0)
                     result.Append(c);
                 else
                     result.Append(replacement);
-            }
 
             return result.ToString();
         }

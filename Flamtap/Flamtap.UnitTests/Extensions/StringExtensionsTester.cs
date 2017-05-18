@@ -104,6 +104,27 @@ namespace Flamtap.UnitTests.Extensions
 
         #endregion
 
+        #region SplitAndKeep
+
+        [Test]
+        public void SplitAndKeep_joining_result_with_same_separator_should_be_equivalent_to_original_value()
+        {
+            string value = "George Louis Costanza";
+            string[] result = value.SplitAndKeep(" ");
+            value.ShouldBeEquivalentTo(string.Join("", result));
+        }
+
+        [Test]
+        public void SplitAndKeep_should_return_items_with_separator()
+        {
+            "split|me|please".SplitAndKeep("|").ShouldBeEquivalentTo(new []{"split|", "me|", "please"});
+            "trailing+separators+test+".SplitAndKeep("+").ShouldBeEquivalentTo(new []{"trailing+", "separators+", "test+", ""});
+            "trailing+separators+test+".SplitAndKeep("+", StringSplitOptions.RemoveEmptyEntries)
+                .ShouldBeEquivalentTo(new[] {"trailing+", "separators+", "test+"});
+        }
+
+        #endregion
+
         #region SplitUnixArgs
 
         [Test]
