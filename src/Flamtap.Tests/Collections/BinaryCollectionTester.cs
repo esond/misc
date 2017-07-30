@@ -5,7 +5,7 @@ using Flamtap.Collections;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Flamtap.UnitTests.Collections
+namespace Flamtap.Tests.Collections
 {
     [TestFixture]
     public class BinaryCollectionTester

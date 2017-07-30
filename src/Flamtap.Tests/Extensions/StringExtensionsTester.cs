@@ -7,7 +7,7 @@ using Flamtap.Extensions;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Flamtap.UnitTests.Extensions
+namespace Flamtap.Tests.Extensions
 {
     [TestFixture]
     public class StringExtensionsTester

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flamtap", "Flamtap\Flamtap.csproj", "{ED945607-D6B6-4615-B422-020C40837ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flamtap.UnitTests", "Flamtap.UnitTests\Flamtap.UnitTests.csproj", "{579A4E94-999F-4D23-9012-638E1C0BFF1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flamtap.Tests", "Flamtap.Tests\Flamtap.Tests.csproj", "{579A4E94-999F-4D23-9012-638E1C0BFF1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

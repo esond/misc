@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Flamtap.UnitTests
+namespace Flamtap.Tests
 {
     public static class RandomExtensions
     {

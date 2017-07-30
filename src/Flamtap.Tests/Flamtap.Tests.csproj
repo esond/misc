@@ -7,8 +7,8 @@
     <ProjectGuid>{579A4E94-999F-4D23-9012-638E1C0BFF1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Flamtap.UnitTests</RootNamespace>
-    <AssemblyName>Flamtap.UnitTests</AssemblyName>
+    <RootNamespace>Flamtap.Tests</RootNamespace>
+    <AssemblyName>Flamtap.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

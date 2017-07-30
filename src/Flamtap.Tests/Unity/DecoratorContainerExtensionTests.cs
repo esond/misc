@@ -2,7 +2,7 @@
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 
-namespace Flamtap.UnitTests.Unity
+namespace Flamtap.Tests.Unity
 {
     public class DecoratorContainerExtensionTests
     {
