@@ -5,11 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Flamtap.Validation;
 
 namespace Flamtap.Extensions
 {
-    public static class StringExtensions
+    public static partial class StringExtensions
     {
         /// <summary>
         ///     Returns a string containing all the characters appearing after the last index of a given value.
@@ -40,18 +39,33 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
-        ///     Evaluates whether or not a string is in UTF-8 encoding.
+        ///     Determines if a string is a valid MQTT topic as per the official specification.
+        /// <see cref="http://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html#appendix-a"/>
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns>True if the string is a valid UTF-8 string.</returns>
-        public static bool IsUtf8(this string value)
+        public static bool IsValidMqttTopic(this string topic)
         {
-            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(value)))
-            {
-                return Utf8Validator.IsUtf8(stream);
-            }
-        }
+            if (string.IsNullOrEmpty(topic))
+                return false;
 
+            if (topic.Contains('#') && !topic.EndsWith("#") && !topic.EndsWith("#/"))
+                return false;
+
+            IEnumerable<string> tokens = topic.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            if (!tokens.Any())
+                return false;
+
+            return tokens.All(s =>
+            {
+                if ((s.Contains('#') || s.Contains('+')) && s.Length > 1)
+                    return false;
+
+                if (!s.IsUtf8())
+                    return false;
+
+                return true;
+            });
+        }
 
         /// <summary>
         ///     Remove all characters from a string that are not a letter or a number.

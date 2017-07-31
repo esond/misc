@@ -1,11 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
-namespace Flamtap.Validation
+namespace Flamtap.Extensions
 {
-    public static class Utf8Validator
+    public static partial class StringExtensions
     {
+        /// <summary>
+        ///     Evaluates whether or not a string is in UTF-8 encoding.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>True if the string is a valid UTF-8 string.</returns>
+        public static bool IsUtf8(this string value)
+        {
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(value)))
+            {
+                return IsUtf8(stream);
+            }
+        }
+
         /// <summary>
         ///     Check if stream is UTF-8 encoded.
         /// </summary>
@@ -30,7 +44,7 @@ namespace Flamtap.Validation
             }
             return IsUtf8(buffer, read);
         }
-        
+
         private static bool IsUtf8(IReadOnlyList<byte> buffer, int length)
         {
             int position = 0;

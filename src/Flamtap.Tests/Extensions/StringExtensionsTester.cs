@@ -90,6 +90,32 @@ namespace Flamtap.Tests.Extensions
 
         #endregion
 
+        #region IsValidMqttTopic
+
+        #region Test Data
+
+        public static IEnumerable<string> ValidTopics => TestConstants.ValidMqttTopics;
+
+        public static IEnumerable<string> InvalidTopics => TestConstants.InvalidMqttTopics;
+
+        #endregion
+
+        [Test]
+        [TestCaseSource(nameof(ValidTopics))]
+        public void should_return_true_for_valid_topics(string validTopic)
+        {
+            validTopic.IsValidMqttTopic().Should().BeTrue();
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidTopics))]
+        public void should_return_false_for_invalid_topics(string invalidTopic)
+        {
+            invalidTopic.IsValidMqttTopic().Should().BeFalse();
+        }
+
+        #endregion
+
         #region RemoveNonAlphanumeric
 
         [Test]
