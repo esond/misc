@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Flamtap.Validation;
 
 namespace Flamtap.Extensions
 {
@@ -37,6 +38,20 @@ namespace Flamtap.Extensions
 
             return value.All(c => c <= maxAsciiCode);
         }
+
+        /// <summary>
+        ///     Evaluates whether or not a string is in UTF-8 encoding.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>True if the string is a valid UTF-8 string.</returns>
+        public static bool IsUtf8(this string value)
+        {
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(value)))
+            {
+                return Utf8Validator.IsUtf8(stream);
+            }
+        }
+
 
         /// <summary>
         ///     Remove all characters from a string that are not a letter or a number.
