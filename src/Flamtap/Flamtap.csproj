@@ -59,11 +59,13 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumUtil.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Validation\MqttTopicValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\SerializationHelper.cs" />
     <Compile Include="Text\TableParser.cs" />
     <Compile Include="Unity\DecoratorBuildStrategy.cs" />
     <Compile Include="Unity\DecoratorContainerExtension.cs" />
+    <Compile Include="Validation\Utf8Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
