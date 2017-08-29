@@ -40,6 +40,17 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
+        ///     Determines if a string is a valid Base 64 encoded string or not.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>True if the string is a valid Base 64 string.</returns>
+        public static bool IsBase64(this string value)
+        {
+            return value.Length % 4 == 0 &&
+                   Regex.IsMatch(value, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+        }
+
+        /// <summary>
         ///     Evaluates whether or not a string is in UTF-8 encoding.
         /// </summary>
         /// <param name="value"></param>
@@ -51,7 +62,6 @@ namespace Flamtap.Extensions
                 return Utf8Validator.IsUtf8(stream);
             }
         }
-
 
         /// <summary>
         ///     Remove all characters from a string that are not a letter or a number.

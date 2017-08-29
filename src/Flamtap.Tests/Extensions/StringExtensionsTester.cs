@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Flamtap.Extensions;
 using FluentAssertions;
@@ -86,6 +87,24 @@ namespace Flamtap.Tests.Extensions
         public void IsAscii_should_return_false_for_non_ascii_strings(string value)
         {
             value.IsAscii().ShouldBeEquivalentTo(false);
+        }
+
+        #endregion
+
+        #region IsBase64
+
+        [Test]
+        [Repeat(5)]
+        public void IsBase64_should_return_true_for_valid_base64_strings()
+        {
+            var bytes = new byte[20];
+            RandomNumberGenerator.Create().GetBytes(bytes);
+
+            string base64 = Convert.ToBase64String(bytes);
+            base64.IsBase64().Should().BeTrue();
+
+            base64 = base64.Substring(0, base64.Length - 2);
+            base64.IsBase64().Should().BeFalse();
         }
 
         #endregion
