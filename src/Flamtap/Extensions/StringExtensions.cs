@@ -22,6 +22,28 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
+        ///     Returns a substring containing the characters between, but not including, the specified strings.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="left">The string to get characters after.</param>
+        /// <param name="right">The tring to get characters before.</param>
+        /// <returns></returns>
+        public static string Between(this string value, string left, string right)
+        {
+            if (!value.Contains(left))
+                return string.Empty;
+
+            string afterFirst = value.Split(new[] { left }, StringSplitOptions.None)[1];
+
+            if (!afterFirst.Contains(right))
+                return string.Empty;
+
+            string result = afterFirst.Split(new[] { right }, StringSplitOptions.None)[0];
+
+            return result;
+        }
+
+        /// <summary>
         ///     Evaluates whether or not a string consists of only ASCII characters.
         /// </summary>
         /// <param name="value">The string to evaluate</param>

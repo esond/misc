@@ -27,6 +27,41 @@ namespace Flamtap.Tests.Extensions
 
         #endregion
 
+        #region Between
+
+        [Test]
+        public void between_should_get_substring_between_left_and_right_1()
+        {
+            "(I Can’t Get No) Satisfaction".Between("(", ")").ShouldBeEquivalentTo("I Can’t Get No");
+        }
+
+        [Test]
+        public void between_should_get_substring_between_left_and_right_2()
+        {
+            "public void foo(){print 'baz';}".Between("{", "}").ShouldBeEquivalentTo("print 'baz';");
+        }
+
+        [Test]
+        public void between_should_get_substring_between_left_and_right_3()
+        {
+            "A George divided against itself cannot stand!".Between("A George", "itself")
+                .ShouldBeEquivalentTo(" divided against ");
+        }
+
+        [Test]
+        public void between_should_return_empty_string_if_left_not_found()
+        {
+            "Gold, Jerry! Gold!".Between("Silver", "Gold").ShouldBeEquivalentTo(string.Empty);
+        }
+
+        [Test]
+        public void between_should_return_empty_string_if_right_not_found()
+        {
+            "Gold, Jerry! Gold!".Between("Gold", "Silver").ShouldBeEquivalentTo(string.Empty);
+        }
+
+        #endregion
+
         #region IsAscii
 
         #region IsAscii Test Values
