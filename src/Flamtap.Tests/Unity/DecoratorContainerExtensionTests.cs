@@ -1,6 +1,6 @@
 ﻿using Flamtap.Unity;
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 
 namespace Flamtap.Tests.Unity
 {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
+using Unity.Builder;
+using Unity.Events;
+using Unity.Extension;
 
 namespace Flamtap.Unity
 {
