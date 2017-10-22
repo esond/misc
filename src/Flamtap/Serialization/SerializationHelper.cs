@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Flamtap.Extensions;
 
 namespace Flamtap.Serialization
@@ -9,8 +8,8 @@ namespace Flamtap.Serialization
     {
         public static IEnumerable<string> ToCsv<T>(IEnumerable<T> objects, string separator = ",", bool header = true)
         {
-            FieldInfo[] fields = typeof(T).GetFields();
-            PropertyInfo[] properties = typeof(T).GetProperties();
+            var fields = typeof(T).GetFields();
+            var properties = typeof(T).GetProperties();
 
             if (header)
             {
@@ -18,7 +17,7 @@ namespace Flamtap.Serialization
                     .Concat(properties.Select(p => p.Name.ToDisplayText())).ToArray());
             }
 
-            foreach (T obj in objects)
+            foreach (var obj in objects)
             {
                 yield return string.Join(separator, fields.Select(f => (f.GetValue(obj) ?? "").ToString())
                     .Concat(properties.Select(p => (p.GetValue(obj, null) ?? "").ToString())).ToArray());

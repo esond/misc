@@ -79,7 +79,7 @@ namespace Flamtap.Extensions
         /// <returns>True if the string is a valid UTF-8 string.</returns>
         public static bool IsUtf8(this string value)
         {
-            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(value)))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(value)))
             {
                 return Utf8Validator.IsUtf8(stream);
             }
@@ -112,7 +112,7 @@ namespace Flamtap.Extensions
         public static string[] SplitAndKeep(this string value, string separator,
             StringSplitOptions options = StringSplitOptions.None)
         {
-            string[] result = Regex.Split(value, $"(?<=[{separator}])");
+            var result = Regex.Split(value, $"(?<=[{separator}])");
 
             return options == StringSplitOptions.RemoveEmptyEntries
                 ? result.Where(s => !string.IsNullOrEmpty(s)).ToArray()
@@ -129,7 +129,7 @@ namespace Flamtap.Extensions
             if (string.IsNullOrWhiteSpace(s))
                 return new string[0];
 
-            List<string> args = new List<string>();
+            var args = new List<string>();
 
             int start = 0, length = 0;
 
@@ -173,11 +173,11 @@ namespace Flamtap.Extensions
                 return value;
 
             string normalizedString = value.Normalize(NormalizationForm.FormD);
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             foreach (char c in normalizedString)
             {
-                UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
 
                 if (unicodeCategory != UnicodeCategory.NonSpacingMark)
                     stringBuilder.Append(c);
@@ -208,13 +208,13 @@ namespace Flamtap.Extensions
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            char[] invalidChars = Path.GetInvalidFileNameChars();
+            var invalidChars = Path.GetInvalidFileNameChars();
 
             if (replacement.ToCharArray().Intersect(invalidChars).Any())
                 throw new ArgumentException($"{nameof(replacement)} cannot contain invalid file name characters.",
                     nameof(replacement));
 
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
             foreach (char c in value.StripDiacritics())
                 if (' ' <= c && c <= '~' && Array.IndexOf(invalidChars, c) < 0)

@@ -45,9 +45,9 @@ namespace Flamtap.Collections
 
         public byte[] ToBytes()
         {
-            List<byte> result = new List<byte>();
+            var result = new List<byte>();
 
-            foreach (T item in _items)
+            foreach (var item in _items)
                 result.AddRange(GetBytes(item));
 
             return result.ToArray();
@@ -70,14 +70,14 @@ namespace Flamtap.Collections
         {
             int valueSize = SizeOf(_typeCode);
 
-            byte[] bytes = collection.ToArray();
+            var bytes = collection.ToArray();
 
             if (bytes.Length % valueSize != 0)
                 throw new ArgumentException($"Length of {nameof(collection)} is invalid for value type {_typeCode}.");
 
-            List<object> result = new List<object>();
+            var result = new List<object>();
 
-            for (int i = 0; i < bytes.Length; i += valueSize)
+            for (var i = 0; i < bytes.Length; i += valueSize)
             {
                 switch (_typeCode)
                 {
@@ -119,8 +119,8 @@ namespace Flamtap.Collections
                         result.Add(BitConverter.ToDouble(bytes, i));
                         break;
                     case TypeCode.Decimal:
-                        int[] bits = new int[4];
-                        for (int j = 0; j <= 15; j += 4)
+                        var bits = new int[4];
+                        for (var j = 0; j <= 15; j += 4)
                             bits[j / 4] = BitConverter.ToInt32(bytes, i + j);
                         result.Add(new decimal(bits));
                         break;

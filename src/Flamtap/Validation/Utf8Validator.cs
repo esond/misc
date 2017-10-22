@@ -33,8 +33,8 @@ namespace Flamtap.Validation
         
         private static bool IsUtf8(IReadOnlyList<byte> buffer, int length)
         {
-            int position = 0;
-            int bytes = 0;
+            var position = 0;
+            var bytes = 0;
             while (position < length)
             {
                 if (!IsValid(buffer, position, length, ref bytes))

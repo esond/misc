@@ -13,14 +13,14 @@ namespace Flamtap.Extensions
         ///     a thursday in it. If the time is a Monday, Tuesday, or Wednesday, then it will
         ///     be the same week number as whatever Thursday, Friday or Saturday are.
         /// </remarks>
-        /// <see cref="https://blogs.msdn.microsoft.com/shawnste/2006/01/24/iso-8601-week-of-year-format-in-microsoft-net/" />
+        /// <see cref="http://blogs.msdn.microsoft.com/shawnste/2006/01/24/iso-8601-week-of-year-format-in-microsoft-net/" />
         /// <param name="time">The DateTime.</param>
         /// <returns>The number or the week that the DateTime falls in.</returns>
         public static int GetIso8601WeekOfYear(this DateTime time)
         {
-            Calendar calendar = CultureInfo.InvariantCulture.Calendar;
+            var calendar = CultureInfo.InvariantCulture.Calendar;
             
-            DayOfWeek day = calendar.GetDayOfWeek(time);
+            var day = calendar.GetDayOfWeek(time);
 
             if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
                 time = time.AddDays(3);

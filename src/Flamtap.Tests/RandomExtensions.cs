@@ -13,7 +13,7 @@ namespace Flamtap.Tests
 
         public static uint NextUInt32(this Random random)
         {
-            byte[] randomBytes = new byte[32];
+            var randomBytes = new byte[32];
             random.NextBytes(randomBytes);
 
             return BitConverter.ToUInt32(randomBytes, 0);
@@ -21,7 +21,7 @@ namespace Flamtap.Tests
 
         public static long NextLong(this Random random)
         {
-            byte[] randomBytes = new byte[32];
+            var randomBytes = new byte[32];
             random.NextBytes(randomBytes);
 
             return BitConverter.ToUInt32(randomBytes, 0);

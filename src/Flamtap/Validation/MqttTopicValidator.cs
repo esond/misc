@@ -8,7 +8,7 @@ namespace Flamtap.Validation
     /// <summary>
     ///     Exposes methods for determining if a string is a valid MQTT topic as per the official
     ///     specification.
-    /// <see cref="https://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html#appendix-a"/>
+    /// <see cref="http://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html#appendix-a"/>
     /// </summary>
     public static class MqttTopicValidator
     {
@@ -22,10 +22,7 @@ namespace Flamtap.Validation
 
             IEnumerable<string> tokens = topic.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            if (!tokens.Any())
-                return false;
-
-            return tokens.All(IsValidMqttLevel);
+            return tokens.Any() && tokens.All(IsValidMqttLevel);
         }
 
         private static bool IsValidMqttLevel(string level)
@@ -33,10 +30,7 @@ namespace Flamtap.Validation
             if ((level.Contains('#') || level.Contains('+')) && level.Length > 1)
                 return false;
 
-            if (!level.IsUtf8())
-                return false;
-
-            return true;
+            return level.IsUtf8();
         }
     }
 }

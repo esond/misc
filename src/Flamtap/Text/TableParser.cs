@@ -28,18 +28,18 @@ namespace Flamtap.Text
         {
             Debug.Assert(columnHeaders.Length == valueSelectors.Length);
 
-            string[,] arrValues = new string[values.Length + 1, valueSelectors.Length];
+            var arrValues = new string[values.Length + 1, valueSelectors.Length];
 
             // Fill headers
-            for (int colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+            for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
             {
                 arrValues[0, colIndex] = columnHeaders[colIndex];
             }
 
             // Fill table rows
-            for (int rowIndex = 1; rowIndex < arrValues.GetLength(0); rowIndex++)
+            for (var rowIndex = 1; rowIndex < arrValues.GetLength(0); rowIndex++)
             {
-                for (int colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+                for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
                 {
                     arrValues[rowIndex, colIndex] = valueSelectors[colIndex]
                         .Invoke(values[rowIndex - 1]).ToString();
@@ -51,13 +51,13 @@ namespace Flamtap.Text
 
         public static string ToStringTable(this string[,] arrValues)
         {
-            int[] maxColumnsWidth = GetMaxColumnsWidth(arrValues);
-            string headerSpliter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
+            var maxColumnsWidth = GetMaxColumnsWidth(arrValues);
+            var headerSpliter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
 
-            StringBuilder sb = new StringBuilder();
-            for (int rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
+            var sb = new StringBuilder();
+            for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
             {
-                for (int colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+                for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
                 {
                     // Print cell
                     string cell = arrValues[rowIndex, colIndex];
@@ -83,10 +83,10 @@ namespace Flamtap.Text
 
         private static int[] GetMaxColumnsWidth(string[,] arrValues)
         {
-            int[] maxColumnsWidth = new int[arrValues.GetLength(1)];
-            for (int colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+            var maxColumnsWidth = new int[arrValues.GetLength(1)];
+            for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
             {
-                for (int rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
+                for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
                 {
                     int newLength = arrValues[rowIndex, colIndex].Length;
                     int oldLength = maxColumnsWidth[colIndex];

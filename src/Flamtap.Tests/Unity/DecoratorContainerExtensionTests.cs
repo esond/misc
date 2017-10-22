@@ -18,10 +18,7 @@ namespace Flamtap.Tests.Unity
         {
             public IContract Base { get; set; }
 
-            public ContractDecorator(IContract @base)
-            {
-                Base = @base;
-            }
+            public ContractDecorator(IContract @base) => Base = @base;
         }
 
         public interface IOtherContract
@@ -34,23 +31,21 @@ namespace Flamtap.Tests.Unity
 
         public class MyClass
         {
+            // ReSharper disable once MemberHidesStaticFromOuterClass
             public IOtherContract OtherContract { get; set; }
 
-            public MyClass(IOtherContract otherContract)
-            {
-                OtherContract = otherContract;
-            }
+            public MyClass(IOtherContract otherContract) => OtherContract = otherContract;
         }
 
         [Test]
         public void HasNoEffectOnCreatingObjectsWithSingleRegistration()
         {
-            IUnityContainer c = new UnityContainer().AddExtension(new DecoratorContainerExtension())
+            var c = new UnityContainer().AddExtension(new DecoratorContainerExtension())
                         .RegisterType<IContract, ContractDecorator>()
                         .RegisterType<IContract, Contract>()
                         .RegisterType<IOtherContract, OtherContract>();
 
-            MyClass o = c.Resolve<MyClass>();
+            var o = c.Resolve<MyClass>();
             Assert.NotNull(o);
             Assert.NotNull(o.OtherContract);
             Assert.True(o.GetType() == typeof(MyClass));
@@ -59,11 +54,11 @@ namespace Flamtap.Tests.Unity
 
         public void CreatesTheMostDependentType()
         {
-            IUnityContainer c = new UnityContainer().AddExtension(new DecoratorContainerExtension())
+            var c = new UnityContainer().AddExtension(new DecoratorContainerExtension())
                         .RegisterType<IContract, ContractDecorator>()
                         .RegisterType<IContract, Contract>();
 
-            IContract o = c.Resolve<IContract>();
+            var o = c.Resolve<IContract>();
             Assert.NotNull(o);
             Assert.True(o.GetType() == typeof(ContractDecorator));
             Assert.True(((ContractDecorator) o).Base.GetType() == typeof(Contract));
@@ -71,11 +66,11 @@ namespace Flamtap.Tests.Unity
 
         public void CanRepeatCreatingTheMostDependentType()
         {
-            IUnityContainer c = new UnityContainer().AddExtension(new DecoratorContainerExtension())
+            var c = new UnityContainer().AddExtension(new DecoratorContainerExtension())
                         .RegisterType<IContract, ContractDecorator>()
                         .RegisterType<IContract, Contract>();
 
-            IContract o = c.Resolve<IContract>();
+            var o = c.Resolve<IContract>();
             Assert.NotNull(o);
             Assert.True(o.GetType() == typeof(ContractDecorator));
             Assert.True(((ContractDecorator) o).Base.GetType() == typeof(Contract));

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using Flamtap.Extensions;
 
-namespace Flamtap.Extensions
+namespace Flamtap
 {
     public static class EnumUtil
     {
@@ -19,9 +20,9 @@ namespace Flamtap.Extensions
         public static string GetDisplayName<TEnum>(TEnum enumValue)
             where TEnum : struct
         {
-            FieldInfo fieldInfo = GetEnumField(enumValue);
+            var fieldInfo = GetEnumField(enumValue);
 
-            DescriptionAttribute descriptionAttribute = fieldInfo.GetCustomAttribute<DescriptionAttribute>();
+            var descriptionAttribute = fieldInfo.GetCustomAttribute<DescriptionAttribute>();
 
             return descriptionAttribute != null ? descriptionAttribute.Description : enumValue.ToString().ToDisplayText();
         }
@@ -31,7 +32,7 @@ namespace Flamtap.Extensions
         {
             foreach (TEnum enumValue in Enum.GetValues(typeof(TEnum)))
             {
-                FieldInfo fieldInfo = typeof(TEnum).GetField(enumValue.ToString());
+                var fieldInfo = typeof(TEnum).GetField(enumValue.ToString());
 
                 if (fieldInfo.GetCustomAttribute<BrowsableAttribute>()?.Browsable == false)
                     continue;

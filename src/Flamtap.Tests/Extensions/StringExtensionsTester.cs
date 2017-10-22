@@ -80,9 +80,9 @@ namespace Flamtap.Tests.Extensions
 
         private static string GetBigAsciiString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            for (int i = 0; i <= 127; i++)
+            for (var i = 0; i <= 127; i++)
                 sb.Append((char) i);
 
             return sb.ToString();
@@ -163,8 +163,8 @@ namespace Flamtap.Tests.Extensions
         [Test]
         public void SplitAndKeep_joining_result_with_same_separator_should_be_equivalent_to_original_value()
         {
-            string value = "George Louis Costanza";
-            string[] result = value.SplitAndKeep(" ");
+            var value = "George Louis Costanza";
+            var result = value.SplitAndKeep(" ");
             value.ShouldBeEquivalentTo(string.Join("", result));
         }
 
@@ -184,7 +184,7 @@ namespace Flamtap.Tests.Extensions
         [Test]
         public void SplitUnixArgs_handles_emtpty_strings()
         {
-            string[] args = string.Empty.SplitUnixArgs();
+            var args = string.Empty.SplitUnixArgs();
 
             args.Length.ShouldBeEquivalentTo(0);
         }
@@ -192,7 +192,7 @@ namespace Flamtap.Tests.Extensions
         [Test]
         public void SplitUnixArgs_splits_args()
         {
-            string[] args = "-u 123 -m message".SplitUnixArgs();
+            var args = "-u 123 -m message".SplitUnixArgs();
 
             args.Length.ShouldBeEquivalentTo(2);
             args[0].ShouldBeEquivalentTo("-u 123");
@@ -209,7 +209,7 @@ namespace Flamtap.Tests.Extensions
         [Test]
         public void SplitUnixArgs_handles_verbs()
         {
-            string[] args = "commit -a".SplitUnixArgs();
+            var args = "commit -a".SplitUnixArgs();
 
             args.Length.ShouldBeEquivalentTo(2);
             args[0].ShouldBeEquivalentTo("commit");
