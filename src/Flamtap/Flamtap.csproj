@@ -47,8 +47,9 @@
     <Compile Include="Console\ConsoleHelper.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\EnumUtil.cs" />
+    <Compile Include="EnumUtil.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Validation\MqttTopicValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\SerializationHelper.cs" />
