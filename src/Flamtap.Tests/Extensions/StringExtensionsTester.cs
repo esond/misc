@@ -72,7 +72,7 @@ namespace Flamtap.Tests.Extensions
             {
                 yield return "Foo";
                 yield return " ";
-                yield return "\r\n\t";
+                yield return "\t";
                 yield return "!@#$$%^&*()_+=-~`[]{}|\\/?;\"<>,.";
                 yield return GetBigAsciiString();
             }
@@ -140,6 +140,50 @@ namespace Flamtap.Tests.Extensions
 
             base64 = base64.Substring(0, base64.Length - 2);
             base64.IsBase64().Should().BeFalse();
+        }
+
+        #endregion
+
+        #region IsJson
+
+        #region IsJson Test Values
+
+        public static IEnumerable<string> ValidJsonStrings
+        {
+            get
+            {
+                yield return "{}";
+                yield return "[{\"name\":\"cat\"}, {\"name\":\"dog\"}]";
+                yield return "[{\"id\":6104546,\"name\":\"-REPONAME\",\"full_name\":\"georgecostanza/-REPONAME\",\"owner\":{\"login\":\"georgecostanza\",\"id\":262517}}]";
+            }
+        }
+
+        public static IEnumerable<string> InvalidJsonStrings
+        {
+            get
+            {
+                yield return "Foo";
+                yield return " ";
+                yield return "\t";
+                yield return "!@#$$%^&*()_+=-~`[]{}|\\/?;\"<>,.";
+                yield return "{/]";
+            }
+        }
+
+        #endregion
+
+        [Test]
+        [TestCaseSource(nameof(ValidJsonStrings))]
+        public void IsJson_should_return_true_for_valid_json(string value)
+        {
+            value.IsJson().Should().BeTrue();
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidJsonStrings))]
+        public void IsJson_should_return_false_for_invalid_json(string value)
+        {
+            value.IsJson().Should().BeFalse();
         }
 
         #endregion

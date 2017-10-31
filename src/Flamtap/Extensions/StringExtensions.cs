@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Flamtap.Validation;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Flamtap.Extensions
 {
@@ -64,12 +66,39 @@ namespace Flamtap.Extensions
         /// <summary>
         ///     Determines if a string is a valid Base 64 encoded string or not.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The string to evaluate.</param>
         /// <returns>True if the string is a valid Base 64 string.</returns>
         public static bool IsBase64(this string value)
         {
             return value.Length % 4 == 0 &&
                    Regex.IsMatch(value, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+        }
+
+        /// <summary>
+        ///     Determines if a string is well-formed JSON.
+        /// </summary>
+        /// <param name="value">The string to evaluate.</param>
+        /// <returns>True if the string is well-formed JSON.</returns>
+        public static bool IsJson(this string value)
+        {
+            value = value.Trim();
+
+            return (value.StartsWith("{") && value.EndsWith("}") || value.StartsWith("[") && value.EndsWith("]"))
+                && IsWellFormed();
+
+            bool IsWellFormed()
+            {
+                try
+                {
+                    JToken.Parse(value);
+                }
+                catch
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         /// <summary>
