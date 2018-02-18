@@ -28,7 +28,7 @@ namespace Flamtap.Tests.Collections
 
             var sut = new BinaryCollection<int>(ints);
 
-            int nextInt = _random.Next();
+            var nextInt = _random.Next();
             ints.Add(nextInt);
             sut.Add(BitConverter.GetBytes(nextInt));
 

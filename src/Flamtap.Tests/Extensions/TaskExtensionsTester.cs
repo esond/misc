@@ -24,7 +24,7 @@ namespace Flamtap.Tests.Extensions
         {
             var result = false;
 
-            int value = await Task.Run(() => -1).TryAsync<int, Exception>(
+            var value = await Task.Run(() => -1).TryAsync<int, Exception>(
                 onSuccess: r =>
                 {
                     result = true;
@@ -55,7 +55,7 @@ namespace Flamtap.Tests.Extensions
         {
             var result = true;
 
-            int value = await Task.Run(() =>
+            var value = await Task.Run(() =>
             {
                 var i = 1;
 
@@ -86,7 +86,7 @@ namespace Flamtap.Tests.Extensions
         {
             var result = true;
 
-            int value = await Task.Run(() =>
+            var value = await Task.Run(() =>
             {
                 var i = 1;
 

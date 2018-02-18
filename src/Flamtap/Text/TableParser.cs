@@ -59,23 +59,20 @@ namespace Flamtap.Text
             {
                 for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
                 {
-                    // Print cell
-                    string cell = arrValues[rowIndex, colIndex];
+                    var cell = arrValues[rowIndex, colIndex];
                     cell = cell.PadRight(maxColumnsWidth[colIndex]);
                     sb.Append(" | ");
                     sb.Append(cell);
                 }
-
-                // Print end of line
+                
                 sb.Append(" | ");
                 sb.AppendLine();
 
-                // Print splitter
-                if (rowIndex == 0)
-                {
-                    sb.AppendFormat(" |{0}| ", headerSpliter);
-                    sb.AppendLine();
-                }
+                if (rowIndex != 0)
+                    continue;
+                
+                sb.AppendFormat(" |{0}| ", headerSpliter);
+                sb.AppendLine();
             }
 
             return sb.ToString();
@@ -88,8 +85,8 @@ namespace Flamtap.Text
             {
                 for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
                 {
-                    int newLength = arrValues[rowIndex, colIndex].Length;
-                    int oldLength = maxColumnsWidth[colIndex];
+                    var newLength = arrValues[rowIndex, colIndex].Length;
+                    var oldLength = maxColumnsWidth[colIndex];
 
                     if (newLength > oldLength)
                         maxColumnsWidth[colIndex] = newLength;
