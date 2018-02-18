@@ -135,7 +135,7 @@ namespace Flamtap.Tests.Extensions
             var bytes = new byte[20];
             RandomNumberGenerator.Create().GetBytes(bytes);
 
-            string base64 = Convert.ToBase64String(bytes);
+            var base64 = Convert.ToBase64String(bytes);
             base64.IsBase64().Should().BeTrue();
 
             base64 = base64.Substring(0, base64.Length - 2);

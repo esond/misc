@@ -68,7 +68,7 @@ namespace Flamtap.Collections
 
         private IEnumerable<T> FromBytes(IEnumerable<byte> collection)
         {
-            int valueSize = SizeOf(_typeCode);
+            var valueSize = SizeOf(_typeCode);
 
             var bytes = collection.ToArray();
 

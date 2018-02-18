@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Flamtap.Validation;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Flamtap.Extensions
@@ -35,12 +34,12 @@ namespace Flamtap.Extensions
             if (!value.Contains(left))
                 return string.Empty;
 
-            string afterFirst = value.Split(new[] { left }, StringSplitOptions.None)[1];
+            var afterFirst = value.Split(new[] { left }, StringSplitOptions.None)[1];
 
             if (!afterFirst.Contains(right))
                 return string.Empty;
 
-            string result = afterFirst.Split(new[] { right }, StringSplitOptions.None)[0];
+            var result = afterFirst.Split(new[] { right }, StringSplitOptions.None)[0];
 
             return result;
         }
@@ -176,7 +175,7 @@ namespace Flamtap.Extensions
             {
                 length = s.IndexOf(" -", start + 1, StringComparison.Ordinal);
 
-                string toAdd = length == -1
+                var toAdd = length == -1
                     ? s.Substring(start, s.Length - start)
                     : s.Substring(start, length - start);
 
@@ -201,10 +200,10 @@ namespace Flamtap.Extensions
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            string normalizedString = value.Normalize(NormalizationForm.FormD);
+            var normalizedString = value.Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();
 
-            foreach (char c in normalizedString)
+            foreach (var c in normalizedString)
             {
                 var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
 
@@ -240,16 +239,20 @@ namespace Flamtap.Extensions
             var invalidChars = Path.GetInvalidFileNameChars();
 
             if (replacement.ToCharArray().Intersect(invalidChars).Any())
+            {
                 throw new ArgumentException($"{nameof(replacement)} cannot contain invalid file name characters.",
                     nameof(replacement));
+            }
 
             var result = new StringBuilder();
 
-            foreach (char c in value.StripDiacritics())
+            foreach (var c in value.StripDiacritics())
+            {
                 if (' ' <= c && c <= '~' && Array.IndexOf(invalidChars, c) < 0)
                     result.Append(c);
                 else
                     result.Append(replacement);
+            }
 
             return result.ToString();
         }

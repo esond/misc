@@ -13,7 +13,7 @@ namespace Flamtap.Validation
         /// <returns>True if the whole stream is UTF-8 encoded.</returns>
         public static bool IsUtf8(Stream stream)
         {
-            int count = 4 * 1024;
+            var count = 4 * 1024;
             byte[] buffer;
             int read;
 
@@ -55,7 +55,7 @@ namespace Flamtap.Validation
                 return true;
             }
 
-            byte ch = buffer[position];
+            var ch = buffer[position];
 
             if (ch <= 0x7F)
             {
