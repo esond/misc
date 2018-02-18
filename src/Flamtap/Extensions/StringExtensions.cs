@@ -118,7 +118,7 @@ namespace Flamtap.Extensions
         /// </summary>
         public static string RemoveNonAlphanumeric(this string value)
         {
-            return new Regex("[^a-zA-Z0-9 ]").Replace(value, string.Empty);
+            return Regex.Replace(value, @"[^a-zA-Z0-9 ]", string.Empty);
         }
 
         /// <summary>
