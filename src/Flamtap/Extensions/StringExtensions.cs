@@ -122,6 +122,14 @@ namespace Flamtap.Extensions
         }
 
         /// <summary>
+        /// Removes all whitespace characters from a string.
+        /// </summary>
+        public static string RemoveWhiteSpace(this string value)
+        {
+            return Regex.Replace(value, @"\s+", string.Empty);
+        }
+
+        /// <summary>
         ///     Like string.Split(), but preserves the separator on the end of the results.
         /// </summary>
         /// <param name="value">The string to split.</param>

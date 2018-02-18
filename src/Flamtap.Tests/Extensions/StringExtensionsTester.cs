@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -198,6 +199,19 @@ namespace Flamtap.Tests.Extensions
             "-foo_bar_".RemoveNonAlphanumeric().ShouldBeEquivalentTo("foobar");
 
             "abc123".RemoveNonAlphanumeric().ShouldBeEquivalentTo("abc123");
+        }
+
+        #endregion
+
+        #region RemoveWhiteSpace
+
+        [Test]
+        public void RemoveWhiteSpace_removes_all_whitespace_characters()
+        {
+            " ".RemoveWhiteSpace().ShouldBeEquivalentTo(string.Empty);
+            "\r\n\t".RemoveWhiteSpace().ShouldBeEquivalentTo(string.Empty);
+
+            "foo".RemoveWhiteSpace().ShouldBeEquivalentTo("foo");
         }
 
         #endregion
