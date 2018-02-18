@@ -2,16 +2,17 @@
 
 namespace Flamtap.Extensions
 {
-    public static class EnumerableExtensions
+    public static class ObjectExtensions
     {
         /// <summary>
-        /// Wraps this object instance into an IEnumerable&lt;T&gt; containing the object.
+        ///     Returns an enumerator for this object instance.
         /// </summary>
         /// <typeparam name="T">The object type.</typeparam>
         /// <returns> An IEnumerable&lt;T&gt; containing a single item.</returns>
         public static IEnumerable<T> Yield<T>(this T item)
         {
-            if (item == null) yield break;
+            if (!typeof(T).IsValueType && item == null)
+                yield break;
 
             yield return item;
         }

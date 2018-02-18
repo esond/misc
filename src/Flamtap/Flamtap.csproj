@@ -49,8 +49,8 @@
     <Compile Include="Collections\BinaryCollection.cs" />
     <Compile Include="Console\ConsoleHelper.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="EnumUtil.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Validation\MqttTopicValidator.cs" />

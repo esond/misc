@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\BinaryCollectionTester.cs" />
+    <Compile Include="Extensions\ObjectExtensionsTester.cs" />
     <Compile Include="Extensions\StringExtensionsTester.cs" />
     <Compile Include="Extensions\TaskExtensionsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
