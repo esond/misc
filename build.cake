@@ -27,14 +27,14 @@ Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore("./src/Flamtap.sln");
+    NuGetRestore("./src/Misc.sln");
 });
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-    MSBuild("./src/Flamtap.sln", settings =>
+    MSBuild("./src/Misc.sln", settings =>
         settings.SetConfiguration(configuration));
 });
 
