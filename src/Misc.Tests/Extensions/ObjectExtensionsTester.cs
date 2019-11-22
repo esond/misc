@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using FluentAssertions;
 using Misc.Extensions;
+using NUnit.Framework;
 
 namespace Misc.Tests.Extensions
 {

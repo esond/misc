@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using FluentAssertions;
 using Misc.Extensions;
+using NUnit.Framework;
 
 namespace Misc.Tests.Extensions
 {

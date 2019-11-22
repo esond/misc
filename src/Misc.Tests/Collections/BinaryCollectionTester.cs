@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Misc.Collections;
+using NUnit.Framework;
 
 namespace Misc.Tests.Collections
 {
